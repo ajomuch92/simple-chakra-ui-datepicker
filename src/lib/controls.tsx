@@ -1,6 +1,18 @@
-import { Select, Flex, IconButton} from "@chakra-ui/react"
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import { ChangeEvent } from "react"
+import { Box, Select, Flex, IconButton, Text } from '@chakra-ui/react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { ChangeEvent } from 'react';
+
+interface LabelDaysProps {
+    labels: string[],
+}
+
+export function LabelDays({labels}: LabelDaysProps) {
+    return <Box display='grid' gridTemplateColumns='repeat(7, 1fr)' gap='5px' marginTop={5}>
+        {
+            labels.map((label) => <Text fontSize='12px' key={label}>{label}</Text>)
+        }
+    </Box>
+}
 
 interface MonthSelectProps {
     months?: string[]

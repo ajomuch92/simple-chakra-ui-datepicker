@@ -13,12 +13,11 @@ import {
   Input,
   InputProps,
   Button,
-  Text,
   Flex,
 } from '@chakra-ui/react'
 import { CalendarIcon } from '@chakra-ui/icons';
 import { ternary, isSameDate } from './utils';
-import { ControlButtons, MonthSelect, YearSelect } from './controls';
+import { ControlButtons, LabelDays, MonthSelect, YearSelect } from './controls';
 
 export interface SimpleDatePickerProps {
   isDisabled?: boolean
@@ -37,6 +36,10 @@ export interface SimpleDatePickerProps {
   colorSchema?: string,
   activeColor?: string,
   inactiveColor?: string,
+  disabledWeekend?: boolean,
+  maxDate?: Date,
+  minDate?: Date,
+  disabledDates?: Date[],
   onChange?: (arg0: Date) => void,
 }
 
@@ -72,9 +75,7 @@ export default function SimpleDatePicker({
   const filledDays = new Array(finalMonthDate.getDate()).fill(undefined).map((_, index) => index + 1);
   const daysOfMonth: Array<number|undefined> = [...blankDays, ...filledDays];
 
-  const setDate = (day?: number) => {
-    if (!day) return;
-    const date = new Date(currentYear, currentMonth, day);
+  const setInternalDate = (date: Date) => {
     setCurrentValue(date);
     setIsPicket(true);
     if (onChange) {
@@ -82,14 +83,17 @@ export default function SimpleDatePicker({
     }
   }
 
+  const setDate = (day?: number) => {
+    if (!day) return;
+    const date = new Date(currentYear, currentMonth, day);
+    setInternalDate(date);
+  }
+
   useEffect(() => {
     if (isPicked) {
       setCurrentText(currentValue.toLocaleDateString())
     }
   }, [setCurrentText, currentValue, isPicked])
-
-
-  const LabelDays = () => daysLabels.map((label) => <Text fontSize='12px' key={label}>{label}</Text>);
 
   const Calendar = () => {
     return daysOfMonth.map((val, index) => {
@@ -129,7 +133,8 @@ export default function SimpleDatePicker({
   }
 
   const setToday = () => {
-    setDate(new Date().getDate());
+    const date = new Date();
+    setInternalDate(date);
   }
 
   return (
@@ -151,9 +156,7 @@ export default function SimpleDatePicker({
             <YearSelect defaultValue={currentYear} onChange={(e) => setCurrentYear(e)}/>
             <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev}/>
           </Flex>
-          <Box display='grid' gridTemplateColumns='repeat(7, 1fr)' gap='5px' marginTop={5}>
-            <LabelDays />
-          </Box>
+          <LabelDays labels={daysLabels} />
           <Box display='grid' gridTemplateColumns='repeat(7, 1fr)' gap='5px' marginTop={2}>
             <Calendar />
           </Box>
