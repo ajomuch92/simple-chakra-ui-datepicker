@@ -16,7 +16,7 @@ import {
   Flex,
 } from '@chakra-ui/react'
 import { CalendarIcon } from '@chakra-ui/icons';
-import { ternary, isSameDate } from './utils';
+import { ternary, isSameDate, isGreaterThanDate, isLessThanDate } from './utils';
 import { ControlButtons, LabelDays, MonthSelect, YearSelect } from './controls';
 
 export interface SimpleDatePickerProps {
@@ -60,6 +60,8 @@ export default function SimpleDatePicker({
     colorSchema= 'blue',
     activeColor = 'blue.400',
     inactiveColor = 'gray.50',
+    maxDate,
+    minDate,
     onChange,
   } : SimpleDatePickerProps
   ) {
@@ -93,12 +95,19 @@ export default function SimpleDatePicker({
     if (isPicked) {
       setCurrentText(currentValue.toLocaleDateString())
     }
-  }, [setCurrentText, currentValue, isPicked])
+  }, [setCurrentText, currentValue, isPicked]);
 
   const Calendar = () => {
     return daysOfMonth.map((val, index) => {
-      const isActiveDate = isSameDate(currentValue, ternary(val, new Date(currentYear, currentMonth, val) , val));
-
+      const localCurrentDate = ternary<Date | undefined>(val, new Date(currentYear, currentMonth, val), val);
+      const isActiveDate = isSameDate(currentValue, localCurrentDate);
+      let isDisabled = false;
+      if (localCurrentDate && maxDate) {
+        isDisabled = isGreaterThanDate(maxDate, localCurrentDate);
+      }
+      if (localCurrentDate && minDate) {
+        isDisabled = isLessThanDate(localCurrentDate, minDate);
+      }
       return <Box
         as={ternary(val, 'button', 'span')}
         key={index}
@@ -109,6 +118,7 @@ export default function SimpleDatePicker({
         display='flex'
         justifyContent='center'
         alignItems='center'
+        disabled={isDisabled}
         cursor={ternary(val,'pointer','default')}
         _hover={ternary(val, {bg: activeColor, color: 'white'}, {})}
         onClick={() => setDate(val)}
@@ -152,8 +162,8 @@ export default function SimpleDatePicker({
         {closable && <PopoverCloseButton />}
         <PopoverBody>
           <Flex mt='20px' alignItems='center' justifyContent='space-around'>
-            <MonthSelect defaultValue={currentMonth} months={months} onChange={(e) => setCurrentMonth(e)} />
-            <YearSelect defaultValue={currentYear} onChange={(e) => setCurrentYear(e)}/>
+            <MonthSelect defaultValue={currentMonth} months={months} currentYear={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentMonth(e)} />
+            <YearSelect defaultValue={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentYear(e)}/>
             <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev}/>
           </Flex>
           <LabelDays labels={daysLabels} />
