@@ -101,36 +101,40 @@ export default function SimpleDatePicker({
   }, [setCurrentText, currentValue, isPicked, formatDate]);
 
   const Calendar = () => {
-    return daysOfMonth.map((val, index) => {
-      const localCurrentDate = ternary<Date | undefined>(val, new Date(currentYear, currentMonth, val), val);
-      const isActiveDate = isSameDate(currentValue, localCurrentDate);
-      let isDisabled = false;
-      if (localCurrentDate && maxDate) {
-        isDisabled = isGreaterThanDate(maxDate, localCurrentDate);
+    return <>
+      {
+        daysOfMonth.map((val, index) => {
+          const localCurrentDate = ternary<Date | undefined>(val, new Date(currentYear, currentMonth, val), val);
+          const isActiveDate = isSameDate(currentValue, localCurrentDate);
+          let isDisabled = false;
+          if (localCurrentDate && maxDate) {
+            isDisabled = isGreaterThanDate(maxDate, localCurrentDate);
+          }
+          if (localCurrentDate && minDate) {
+            isDisabled = isLessThanDate(localCurrentDate, minDate);
+          }
+          return <Box
+            as={ternary(val, 'button', 'span')}
+            key={index}
+            bg={ternary(val, ternary(isActiveDate, activeColor , inactiveColor),'transparent')}
+            textColor={ternary(isActiveDate, 'white' , 'black')}
+            aspectRatio={1}
+            borderRadius='md'
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            disabled={isDisabled}
+            cursor={ternary(val,'pointer','default')}
+            _hover={ternary(val, {bg: activeColor, color: 'white'}, {})}
+            onClick={() => {
+              setDate(val);
+            }}
+          >
+            {val}
+          </Box>
+        })
       }
-      if (localCurrentDate && minDate) {
-        isDisabled = isLessThanDate(localCurrentDate, minDate);
-      }
-      return <Box
-        as={ternary(val, 'button', 'span')}
-        key={index}
-        bg={ternary(val, ternary(isActiveDate, activeColor , inactiveColor),'transparent')}
-        textColor={ternary(isActiveDate, 'white' , 'black')}
-        aspectRatio={1}
-        borderRadius='md'
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-        disabled={isDisabled}
-        cursor={ternary(val,'pointer','default')}
-        _hover={ternary(val, {bg: activeColor, color: 'white'}, {})}
-        onClick={() => {
-          setDate(val);
-        }}
-      >
-        {val}
-      </Box>
-    })
+    </>
   }
 
   const onNext = () => {
