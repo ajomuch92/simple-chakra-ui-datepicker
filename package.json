@@ -3,6 +3,10 @@
   "private": false,
   "version": "0.0.1-beta",
   "type": "module",
+  "author": {
+    "name": "Aarón Montes",
+    "url": "https://github.com/ajomuch92/simple-chakra-ui-datepicker"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
