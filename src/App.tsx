@@ -1,23 +1,13 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { SimpleDatePicker } from './lib'
 
 function App() {
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <SimpleDatePicker />
-    </>
+    <main style={{width: '100%', height: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+      <h1>Example</h1>
+      <SimpleDatePicker maxDate={new Date(2024, 3, 16)} minDate={new Date(2020, 0, 1 )}/>
+    </main>
   )
 }
 
