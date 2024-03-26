@@ -36,10 +36,11 @@ export interface SimpleDatePickerProps {
   colorSchema?: string,
   activeColor?: string,
   inactiveColor?: string,
-  disabledWeekend?: boolean,
+  // disabledWeekend?: boolean,
   maxDate?: Date,
   minDate?: Date,
   disabledDates?: Date[],
+  formatDate?: (arg0: Date) => string,
   onChange?: (arg0: Date) => void,
 }
 
@@ -63,6 +64,7 @@ export default function SimpleDatePicker({
     maxDate,
     minDate,
     onChange,
+    formatDate,
   } : SimpleDatePickerProps
   ) {
   const [currentText, setCurrentText] = useState('');
@@ -93,9 +95,10 @@ export default function SimpleDatePicker({
 
   useEffect(() => {
     if (isPicked) {
-      setCurrentText(currentValue.toLocaleDateString())
+      if (formatDate) setCurrentText(formatDate(currentValue));
+      else setCurrentText(currentValue.toLocaleDateString());
     }
-  }, [setCurrentText, currentValue, isPicked]);
+  }, [setCurrentText, currentValue, isPicked, formatDate]);
 
   const Calendar = () => {
     return daysOfMonth.map((val, index) => {
@@ -121,7 +124,9 @@ export default function SimpleDatePicker({
         disabled={isDisabled}
         cursor={ternary(val,'pointer','default')}
         _hover={ternary(val, {bg: activeColor, color: 'white'}, {})}
-        onClick={() => setDate(val)}
+        onClick={() => {
+          setDate(val);
+        }}
       >
         {val}
       </Box>
