@@ -170,7 +170,7 @@ export default function SimpleDatePicker({
         {withArrow && <PopoverArrow />}
         {closable && <PopoverCloseButton />}
         <PopoverBody>
-          <Flex mt='20px' alignItems='center' justifyContent='space-around'>
+          <Flex mt={6} alignItems='center' justifyContent='space-around'>
             <MonthSelect defaultValue={currentMonth} months={months} currentYear={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentMonth(e)} />
             <YearSelect defaultValue={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentYear(e)}/>
             <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev}/>
