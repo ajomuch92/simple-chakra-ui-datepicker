@@ -16,9 +16,9 @@ export default defineConfig({
     build: {
         lib: {
           entry: resolve(__dirname, 'src/lib/index.ts'),
-          name: 'MyLib',
+          name: 'simple-chakra-ui-datepicker',
           formats: ['es', 'umd'],
-          fileName: (format) => `my-lib.${format}.js`,
+          fileName: (format) => `simple-chakra-ui-datepicker.${format}.js`,
         },
         rollupOptions: {
           external: ['react', 'react-dom'],
