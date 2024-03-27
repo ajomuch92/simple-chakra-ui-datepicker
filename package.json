@@ -1,12 +1,24 @@
 {
   "name": "simple-chakra-ui-datepicker",
   "private": false,
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "type": "module",
+  "main": "simple-chakra-ui-datepicker.es.js",
+  "types": "lib/index.d.ts",
+  "files": ["src"],
   "author": {
     "name": "Aarón Montes",
     "url": "https://github.com/ajomuch92/simple-chakra-ui-datepicker"
   },
+  "license": "MIT",
+  "keywords": [
+    "React",
+    "Datepicker",
+    "Chakra UI",
+    "Chakra",
+    "Date picker",
+    "Simple Chakra UI datepicker"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
