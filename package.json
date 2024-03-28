@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.2-beta",
   "type": "module",
-  "main": "simple-chakra-ui-datepicker.es.js",
+  "main": "lib/index.ts",
   "types": "lib/index.d.ts",
   "files": ["src"],
   "author": {
