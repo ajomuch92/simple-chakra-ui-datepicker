@@ -23,11 +23,13 @@ export default defineConfig({
       fileName: (format) => `simple-chakra-ui-datepicker.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', '@chakra-ui/react', '@chakra-ui/icons'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          '@chakra-ui/react': '@chakra-ui/react',
+          '@chakra-ui/icons': '@chakra-ui/icons'
         },
       },
     },
