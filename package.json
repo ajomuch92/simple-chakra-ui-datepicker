@@ -1,7 +1,7 @@
 {
   "name": "simple-chakra-ui-datepicker",
   "private": false,
-  "version": "0.0.8-beta",
+  "version": "0.0.9-beta",
   "type": "module",
   "main": "dist/simple-chakra-ui-datepicker.umd.js",
   "types": "dist/index.d.ts",
