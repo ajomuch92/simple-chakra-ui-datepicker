@@ -17,7 +17,7 @@ export default defineConfig({
   build: {
     copyPublicDir: false,
     lib: {
-      entry: resolve(__dirname, 'src/lib/index.ts'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'simple-chakra-ui-datepicker',
       formats: ['es'],
       fileName: (format) => `simple-chakra-ui-datepicker.${format}.js`,
