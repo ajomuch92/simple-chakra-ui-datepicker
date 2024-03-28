@@ -1,7 +1,7 @@
 {
   "name": "simple-chakra-ui-datepicker",
   "private": false,
-  "version": "0.0.3-beta",
+  "version": "0.0.4-beta",
   "type": "module",
   "main": "lib/index.ts",
   "types": "lib/index.d.ts",
