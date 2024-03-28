@@ -4,7 +4,7 @@
   "version": "0.0.4-beta",
   "type": "module",
   "main": "lib/index.ts",
-  "types": "lib/index.d.ts",
+  "types": "index.d.ts",
   "files": ["src"],
   "author": {
     "name": "Aarón Montes",
