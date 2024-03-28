@@ -19,7 +19,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'simple-chakra-ui-datepicker',
-      formats: ['es'],
+      formats: ['es', 'umd'],
       fileName: (format) => `simple-chakra-ui-datepicker.${format}.js`,
     },
     rollupOptions: {
