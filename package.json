@@ -1,11 +1,13 @@
 {
   "name": "simple-chakra-ui-datepicker",
   "private": false,
-  "version": "0.0.5-beta",
+  "version": "0.0.6-beta",
   "type": "module",
-  "main": "index.ts",
-  "types": "index.d.ts",
-  "files": ["src"],
+  "main": "dist/lib/index.d.ts",
+  "types": "dist/lib/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": {
     "name": "Aarón Montes",
     "url": "https://github.com/ajomuch92"
