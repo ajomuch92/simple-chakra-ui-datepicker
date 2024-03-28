@@ -27,7 +27,7 @@ export interface SimpleDatePickerProps {
   popoverProps?: PopoverProps,
   closable?: boolean,
   placeholder?: string,
-  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue'>
+  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema'>
   defaultValue?: Date,
   todayLabel?: string,
   clearLabel?: string,
@@ -58,7 +58,7 @@ export default function SimpleDatePicker({
     daysLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     defaultValue,
     months,
-    colorSchema= 'blue',
+    colorSchema = 'blue',
     activeColor = 'blue.400',
     inactiveColor = 'gray.50',
     maxDate,
@@ -160,7 +160,7 @@ export default function SimpleDatePicker({
     <Popover {...popoverProps}>
       <PopoverTrigger>
         <Box position='relative' pointerEvents={isDisabled ? 'none':undefined} backgroundColor={isDisabled ? 'gray.100' : undefined} opacity={isDisabled ? 0.8 : 1} {...containerProps}>
-          <Input isReadOnly placeholder={placeholder} defaultValue={currentText} cursor='pointer' {...inputProps} />
+          <Input isReadOnly placeholder={placeholder} defaultValue={currentText} colorScheme={colorSchema} cursor='pointer' {...inputProps} />
           <Box as='span' position='absolute' right='0.5rem' top='50%' transform='translateY(-50%)'>
             {icon}
           </Box>
@@ -170,7 +170,7 @@ export default function SimpleDatePicker({
         {withArrow && <PopoverArrow />}
         {closable && <PopoverCloseButton />}
         <PopoverBody>
-          <Flex mt={6} alignItems='center' justifyContent='space-around'>
+          <Flex mt={closable ? 6 : 2} alignItems='center' justifyContent='space-around'>
             <MonthSelect defaultValue={currentMonth} months={months} currentYear={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentMonth(e)} />
             <YearSelect defaultValue={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentYear(e)}/>
             <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev}/>
@@ -182,8 +182,8 @@ export default function SimpleDatePicker({
         </PopoverBody>
         <PopoverFooter>
           <Box display='flex' justifyContent='space-between'>
-            <Button size='sm' colorScheme={colorSchema} onClick={setToday}>{todayLabel}</Button>
-            <Button size='sm' variant='ghost' colorScheme={colorSchema}>{clearLabel}</Button>
+            <Button size='sm' colorScheme={colorSchema} bg={activeColor} onClick={setToday}>{todayLabel}</Button>
+            <Button size='sm' variant='ghost' color={activeColor} colorScheme={colorSchema}>{clearLabel}</Button>
           </Box>
         </PopoverFooter>
       </PopoverContent>
