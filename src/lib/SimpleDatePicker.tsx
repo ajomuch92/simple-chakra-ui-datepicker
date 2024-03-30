@@ -40,6 +40,8 @@ export interface SimpleDatePickerProps {
   maxDate?: Date,
   minDate?: Date,
   disabledDates?: Date[],
+  monthGap?: string,
+  dateBorderRadius?: string,
   formatDate?: (arg0: Date) => string,
   onChange?: (arg0: Date) => void,
 }
@@ -61,6 +63,8 @@ export default function SimpleDatePicker({
     colorSchema = 'blue',
     activeColor = 'blue.400',
     inactiveColor = 'gray.50',
+    monthGap = '5px',
+    dateBorderRadius = 'md',
     maxDate,
     minDate,
     onChange,
@@ -119,7 +123,7 @@ export default function SimpleDatePicker({
             bg={ternary(val, ternary(isActiveDate, activeColor , inactiveColor),'transparent')}
             textColor={ternary(isActiveDate, 'white' , 'black')}
             aspectRatio={1}
-            borderRadius='md'
+            borderRadius={dateBorderRadius}
             display='flex'
             justifyContent='center'
             alignItems='center'
@@ -171,12 +175,12 @@ export default function SimpleDatePicker({
         {closable && <PopoverCloseButton />}
         <PopoverBody>
           <Flex mt={closable ? 6 : 2} alignItems='center' justifyContent='space-around'>
-            <MonthSelect defaultValue={currentMonth} months={months} currentYear={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentMonth(e)} />
-            <YearSelect defaultValue={currentYear} maxDate={maxDate} minDate={minDate} onChange={(e) => setCurrentYear(e)}/>
+            <MonthSelect defaultValue={currentMonth} months={months} currentYear={currentYear} maxDate={maxDate} minDate={minDate} colorSchema={colorSchema} onChange={(e) => setCurrentMonth(e)} />
+            <YearSelect defaultValue={currentYear} maxDate={maxDate} minDate={minDate} colorSchema={colorSchema} onChange={(e) => setCurrentYear(e)}/>
             <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev}/>
           </Flex>
-          <LabelDays labels={daysLabels} />
-          <Box display='grid' gridTemplateColumns='repeat(7, 1fr)' gap='5px' marginTop={2}>
+          <LabelDays labels={daysLabels} gap={monthGap} />
+          <Box display='grid' gridTemplateColumns='repeat(7, 1fr)' gap={monthGap} marginTop={2}>
             <Calendar />
           </Box>
         </PopoverBody>
