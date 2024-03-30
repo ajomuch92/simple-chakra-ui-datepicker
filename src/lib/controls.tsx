@@ -3,13 +3,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { ChangeEvent } from 'react'
 import { isGreaterThanDate, isLessThanDate } from './utils'
 
-interface LabelDaysProps {
-  labels: string[]
+export interface LabelDaysProps {
+  labels: string[],
+  gap?: string
 }
 
-export function LabelDays({ labels }: LabelDaysProps) {
+export function LabelDays({ labels, gap }: LabelDaysProps) {
   return (
-    <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" gap="5px" marginTop={5}>
+    <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" gap={gap} marginTop={5}>
       {labels.map((label) => (
         <Text fontSize="12px" key={label}>
           {label}
@@ -26,6 +27,7 @@ export interface MonthSelectProps {
   currentYear?: number
   maxDate?: Date
   minDate?: Date
+  colorSchema?: string
 }
 
 export function MonthSelect({
@@ -48,6 +50,7 @@ export function MonthSelect({
   currentYear,
   maxDate,
   minDate,
+  colorSchema
 }: MonthSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -71,6 +74,7 @@ export function MonthSelect({
       onChange={onChangeHandler}
       size="sm"
       maxW="fit-content"
+      colorScheme={colorSchema}
     >
       {months.map((value, index) => (
         <option value={index} key={index} disabled={isMonthDisabled(index)}>
@@ -88,6 +92,7 @@ interface YearSelectProps {
   defaultValue?: number
   maxDate?: Date
   minDate?: Date
+  colorSchema?: string
 }
 
 export function YearSelect({
@@ -97,6 +102,7 @@ export function YearSelect({
   initialYear = new Date().getFullYear() - 100,
   maxDate,
   minDate,
+  colorSchema
 }: YearSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -120,6 +126,7 @@ export function YearSelect({
       onChange={onChangeHandler}
       size="sm"
       maxW="fit-content"
+      colorScheme={colorSchema}
     >
       {years.map((value, index) => (
         <option value={value} key={index}>
