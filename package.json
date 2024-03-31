@@ -1,7 +1,7 @@
 {
   "name": "simple-chakra-ui-datepicker",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./dist/simple-chakra-ui-datepicker.umd.js",
   "module": "./dist/simple-chakra-ui-datepicker.es.js",
@@ -23,7 +23,7 @@
   "repository": {
     "url": "https://github.com/ajomuch92/simple-chakra-ui-datepicker"
   },
-  "homepage": "https://github.com/ajomuch92/simple-chakra-ui-datepicker",
+  "homepage": "https://aarons-organization-7.gitbook.io/simple-chakra-ui-datepicker",
   "license": "MIT",
   "keywords": [
     "React",
