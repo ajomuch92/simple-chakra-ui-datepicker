@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 import { isGreaterThanDate, isLessThanDate } from './utils'
 
 export interface LabelDaysProps {
-  labels: string[],
+  labels: string[]
   gap?: string
 }
 
@@ -50,7 +50,7 @@ export function MonthSelect({
   currentYear,
   maxDate,
   minDate,
-  colorSchema
+  colorSchema,
 }: MonthSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -102,7 +102,7 @@ export function YearSelect({
   initialYear = new Date().getFullYear() - 100,
   maxDate,
   minDate,
-  colorSchema
+  colorSchema,
 }: YearSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
