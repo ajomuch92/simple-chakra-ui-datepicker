@@ -36,7 +36,7 @@ export interface SimpleDatePickerProps {
   colorSchema?: string
   activeColor?: string
   inactiveColor?: string
-  disabledWeekend?: boolean,
+  disabledWeekend?: boolean
   maxDate?: Date
   minDate?: Date
   disabledDates?: Date[]
@@ -117,17 +117,24 @@ export default function SimpleDatePicker({
             val,
           )
           const isActiveDate = isSameDate(currentValue, localCurrentDate)
-          let isDisabledWithMaxDate = false;
-          let isDisabledWithMinDate = false;
+          let isDisabledWithMaxDate = false
+          let isDisabledWithMinDate = false
           if (localCurrentDate && maxDate) {
-            isDisabledWithMaxDate = isGreaterThanDate(localCurrentDate, maxDate);
+            isDisabledWithMaxDate = isGreaterThanDate(localCurrentDate, maxDate)
           }
           if (localCurrentDate && minDate) {
-            isDisabledWithMinDate = isLessThanDate(localCurrentDate, minDate);
+            isDisabledWithMinDate = isLessThanDate(localCurrentDate, minDate)
           }
-          const isWithinDisabledDates = Array.isArray(disabledDates) && disabledDates.some((r) => isSameDate(localCurrentDate, r));
-          const isDisabledWeekend = localCurrentDate && disabledWeekend && [0, 6].includes(localCurrentDate.getDay());
-          const isDisabled = isDisabledWithMaxDate || isDisabledWithMinDate || isWithinDisabledDates || isDisabledWeekend;
+          const isWithinDisabledDates =
+            Array.isArray(disabledDates) &&
+            disabledDates.some((r) => isSameDate(localCurrentDate, r))
+          const isDisabledWeekend =
+            localCurrentDate && disabledWeekend && [0, 6].includes(localCurrentDate.getDay())
+          const isDisabled =
+            isDisabledWithMaxDate ||
+            isDisabledWithMinDate ||
+            isWithinDisabledDates ||
+            isDisabledWeekend
           return (
             <Box
               as={ternary(val, 'button', 'span')}
