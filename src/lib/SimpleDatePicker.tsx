@@ -36,7 +36,7 @@ export interface SimpleDatePickerProps {
   colorSchema?: string
   activeColor?: string
   inactiveColor?: string
-  // disabledWeekend?: boolean,
+  disabledWeekend?: boolean,
   maxDate?: Date
   minDate?: Date
   disabledDates?: Date[]
@@ -65,6 +65,8 @@ export default function SimpleDatePicker({
   inactiveColor = 'gray.50',
   monthGap = '5px',
   dateBorderRadius = 'md',
+  disabledDates,
+  disabledWeekend,
   maxDate,
   minDate,
   onChange,
@@ -115,13 +117,17 @@ export default function SimpleDatePicker({
             val,
           )
           const isActiveDate = isSameDate(currentValue, localCurrentDate)
-          let isDisabled = false
+          let isDisabledWithMaxDate = false;
+          let isDisabledWithMinDate = false;
           if (localCurrentDate && maxDate) {
-            isDisabled = isGreaterThanDate(maxDate, localCurrentDate)
+            isDisabledWithMaxDate = isGreaterThanDate(localCurrentDate, maxDate);
           }
           if (localCurrentDate && minDate) {
-            isDisabled = isLessThanDate(localCurrentDate, minDate)
+            isDisabledWithMinDate = isLessThanDate(localCurrentDate, minDate);
           }
+          const isWithinDisabledDates = Array.isArray(disabledDates) && disabledDates.some((r) => isSameDate(localCurrentDate, r));
+          const isDisabledWeekend = localCurrentDate && disabledWeekend && [0, 6].includes(localCurrentDate.getDay());
+          const isDisabled = isDisabledWithMaxDate || isDisabledWithMinDate || isWithinDisabledDates || isDisabledWeekend;
           return (
             <Box
               as={ternary(val, 'button', 'span')}
@@ -134,10 +140,22 @@ export default function SimpleDatePicker({
               justifyContent="center"
               alignItems="center"
               disabled={isDisabled}
+              _disabled={{
+                opacity: 0.5,
+                cursor: 'not-allowed',
+              }}
               cursor={ternary(val, 'pointer', 'default')}
-              _hover={ternary(val, { bg: activeColor, color: 'white', borderColor: 'transparent' }, {})}
+              _hover={ternary(
+                val,
+                {
+                  bg: ternary(isDisabled, inactiveColor, activeColor),
+                  color: ternary(isDisabled, 'initial', 'white'),
+                  borderColor: 'transparent',
+                },
+                {},
+              )}
               onClick={() => {
-                setDate(val)
+                if (!isDisabled) setDate(val)
               }}
             >
               {val}
@@ -211,7 +229,12 @@ export default function SimpleDatePicker({
               activeColor={activeColor}
               onChange={(e) => setCurrentYear(e)}
             />
-            <ControlButtons bgColor={inactiveColor} activeColor={activeColor} onNext={onNext} onPrev={onPrev} />
+            <ControlButtons
+              bgColor={inactiveColor}
+              activeColor={activeColor}
+              onNext={onNext}
+              onPrev={onPrev}
+            />
           </Flex>
           <LabelDays labels={daysLabels} gap={monthGap} />
           <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" gap={monthGap} marginTop={2}>
@@ -220,10 +243,22 @@ export default function SimpleDatePicker({
         </PopoverBody>
         <PopoverFooter>
           <Box display="flex" justifyContent="space-between">
-            <Button size="sm" colorScheme={colorSchema} bg={activeColor} onClick={setToday} _hover={{borderColor: 'transparent'}}>
+            <Button
+              size="sm"
+              colorScheme={colorSchema}
+              bg={activeColor}
+              onClick={setToday}
+              _hover={{ borderColor: 'transparent' }}
+            >
               {todayLabel}
             </Button>
-            <Button size="sm" variant="ghost" color={activeColor} colorScheme={colorSchema} _hover={{borderColor: activeColor}}>
+            <Button
+              size="sm"
+              variant="ghost"
+              color={activeColor}
+              colorScheme={colorSchema}
+              _hover={{ borderColor: activeColor }}
+            >
               {clearLabel}
             </Button>
           </Box>
