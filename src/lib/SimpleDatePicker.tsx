@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import {
   Box,
   BoxProps,
@@ -21,7 +21,9 @@ import { ControlButtons, LabelDays, MonthSelect, YearSelect } from './controls'
 
 export interface SimpleDatePickerProps {
   isDisabled?: boolean
-  icon?: ReactNode
+  icon?: ReactElement
+  rightArrowIcon?: ReactElement
+  leftArrowIcon?: ReactElement
   containerProps?: Omit<BoxProps, 'position' | 'backgroundColor' | 'opacity'>
   withArrow?: boolean
   popoverProps?: PopoverProps
@@ -49,6 +51,8 @@ export interface SimpleDatePickerProps {
 export default function SimpleDatePicker({
   isDisabled = false,
   icon = <CalendarIcon />,
+  rightArrowIcon,
+  leftArrowIcon,
   withArrow = true,
   closable = true,
   containerProps,
@@ -239,6 +243,8 @@ export default function SimpleDatePicker({
             <ControlButtons
               bgColor={inactiveColor}
               activeColor={activeColor}
+              rightArrowIcon={rightArrowIcon}
+              leftArrowIcon={leftArrowIcon}
               onNext={onNext}
               onPrev={onPrev}
             />

@@ -1,6 +1,6 @@
 import { Box, Select, Flex, IconButton, Text } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import { isGreaterThanDate, isLessThanDate } from './utils'
 
 export interface LabelDaysProps {
@@ -141,27 +141,29 @@ export function YearSelect({
   )
 }
 
-interface ControlButtonsProps {
+export interface ControlButtonsProps {
   onNext?: () => void
   onPrev?: () => void
   bgColor?: string
   activeColor?: string
+  rightArrowIcon?: ReactElement
+  leftArrowIcon?: ReactElement
 }
 
-export function ControlButtons({ onNext, onPrev, bgColor, activeColor }: ControlButtonsProps) {
+export function ControlButtons({ onNext, onPrev, rightArrowIcon = <ChevronRightIcon />, leftArrowIcon = <ChevronLeftIcon />, bgColor, activeColor }: ControlButtonsProps) {
   return (
     <Flex gap="3px" justifyContent="center">
       <IconButton
         aria-label="Go back"
         bg={bgColor}
-        icon={<ChevronLeftIcon />}
+        icon={leftArrowIcon}
         _hover={{ borderColor: activeColor }}
         onClick={onPrev}
       />
       <IconButton
         aria-label="Go ahead"
         bg={bgColor}
-        icon={<ChevronRightIcon />}
+        icon={rightArrowIcon}
         _hover={{ borderColor: activeColor }}
         onClick={onNext}
       />
