@@ -6,7 +6,7 @@ Read the docs [here](https://aarons-organization-7.gitbook.io/simple-chakra-ui-d
 
 Project under construction, please do not use on production.
 
-<img src="https://res.cloudinary.com/dxcmm3jnj/image/upload/v1711583776/simple-chakra-ui-datepicker/uzjfmhozxcpw3kxb71ot.png"/>
+<img src="https://res.cloudinary.com/dxcmm3jnj/image/upload/v1711583776/simple-chakra-ui-datepicker/uzjfmhozxcpw3kxb71ot.png" height="200px"/>
 
 
 
