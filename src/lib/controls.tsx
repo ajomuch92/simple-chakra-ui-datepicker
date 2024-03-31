@@ -76,7 +76,7 @@ export function MonthSelect({
       _focusVisible={{
         borderColor: 'transparent',
       }}
-      cursor='pointer'
+      cursor="pointer"
     >
       {months.map((value, index) => (
         <option value={index} key={index} disabled={isMonthDisabled(index)}>
@@ -130,7 +130,7 @@ export function YearSelect({
       _focusVisible={{
         borderColor: 'transparent',
       }}
-      cursor='pointer'
+      cursor="pointer"
     >
       {years.map((value, index) => (
         <option value={value} key={index}>
@@ -151,8 +151,20 @@ interface ControlButtonsProps {
 export function ControlButtons({ onNext, onPrev, bgColor, activeColor }: ControlButtonsProps) {
   return (
     <Flex gap="3px" justifyContent="center">
-      <IconButton aria-label="Go back" bg={bgColor} icon={<ChevronLeftIcon />} _hover={{borderColor: activeColor}} onClick={onPrev} />
-      <IconButton aria-label="Go ahead" bg={bgColor} icon={<ChevronRightIcon />} _hover={{borderColor: activeColor}} onClick={onNext} />
+      <IconButton
+        aria-label="Go back"
+        bg={bgColor}
+        icon={<ChevronLeftIcon />}
+        _hover={{ borderColor: activeColor }}
+        onClick={onPrev}
+      />
+      <IconButton
+        aria-label="Go ahead"
+        bg={bgColor}
+        icon={<ChevronRightIcon />}
+        _hover={{ borderColor: activeColor }}
+        onClick={onNext}
+      />
     </Flex>
   )
 }
