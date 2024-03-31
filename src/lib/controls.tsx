@@ -27,7 +27,7 @@ export interface MonthSelectProps {
   currentYear?: number
   maxDate?: Date
   minDate?: Date
-  colorSchema?: string
+  activeColor?: string
 }
 
 export function MonthSelect({
@@ -50,7 +50,6 @@ export function MonthSelect({
   currentYear,
   maxDate,
   minDate,
-  colorSchema,
 }: MonthSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -74,7 +73,10 @@ export function MonthSelect({
       onChange={onChangeHandler}
       size="sm"
       maxW="fit-content"
-      colorScheme={colorSchema}
+      _focusVisible={{
+        borderColor: 'transparent',
+      }}
+      cursor='pointer'
     >
       {months.map((value, index) => (
         <option value={index} key={index} disabled={isMonthDisabled(index)}>
@@ -85,14 +87,14 @@ export function MonthSelect({
   )
 }
 
-interface YearSelectProps {
+export interface YearSelectProps {
   initialYear?: number
   endYear?: number
   onChange?: (arg0: number) => void
   defaultValue?: number
   maxDate?: Date
   minDate?: Date
-  colorSchema?: string
+  activeColor?: string
 }
 
 export function YearSelect({
@@ -102,7 +104,6 @@ export function YearSelect({
   initialYear = new Date().getFullYear() - 100,
   maxDate,
   minDate,
-  colorSchema,
 }: YearSelectProps) {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -126,7 +127,10 @@ export function YearSelect({
       onChange={onChangeHandler}
       size="sm"
       maxW="fit-content"
-      colorScheme={colorSchema}
+      _focusVisible={{
+        borderColor: 'transparent',
+      }}
+      cursor='pointer'
     >
       {years.map((value, index) => (
         <option value={value} key={index}>
@@ -141,13 +145,14 @@ interface ControlButtonsProps {
   onNext?: () => void
   onPrev?: () => void
   bgColor?: string
+  activeColor?: string
 }
 
-export function ControlButtons({ onNext, onPrev, bgColor }: ControlButtonsProps) {
+export function ControlButtons({ onNext, onPrev, bgColor, activeColor }: ControlButtonsProps) {
   return (
     <Flex gap="3px" justifyContent="center">
-      <IconButton aria-label="Go back" bg={bgColor} icon={<ChevronLeftIcon />} onClick={onPrev} />
-      <IconButton aria-label="Go ahead" bg={bgColor} icon={<ChevronRightIcon />} onClick={onNext} />
+      <IconButton aria-label="Go back" bg={bgColor} icon={<ChevronLeftIcon />} _hover={{borderColor: activeColor}} onClick={onPrev} />
+      <IconButton aria-label="Go ahead" bg={bgColor} icon={<ChevronRightIcon />} _hover={{borderColor: activeColor}} onClick={onNext} />
     </Flex>
   )
 }
