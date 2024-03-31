@@ -135,7 +135,7 @@ export default function SimpleDatePicker({
               alignItems="center"
               disabled={isDisabled}
               cursor={ternary(val, 'pointer', 'default')}
-              _hover={ternary(val, { bg: activeColor, color: 'white' }, {})}
+              _hover={ternary(val, { bg: activeColor, color: 'white', borderColor: 'transparent' }, {})}
               onClick={() => {
                 setDate(val)
               }}
@@ -201,17 +201,17 @@ export default function SimpleDatePicker({
               currentYear={currentYear}
               maxDate={maxDate}
               minDate={minDate}
-              colorSchema={colorSchema}
+              activeColor={activeColor}
               onChange={(e) => setCurrentMonth(e)}
             />
             <YearSelect
               defaultValue={currentYear}
               maxDate={maxDate}
               minDate={minDate}
-              colorSchema={colorSchema}
+              activeColor={activeColor}
               onChange={(e) => setCurrentYear(e)}
             />
-            <ControlButtons bgColor={inactiveColor} onNext={onNext} onPrev={onPrev} />
+            <ControlButtons bgColor={inactiveColor} activeColor={activeColor} onNext={onNext} onPrev={onPrev} />
           </Flex>
           <LabelDays labels={daysLabels} gap={monthGap} />
           <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" gap={monthGap} marginTop={2}>
@@ -220,10 +220,10 @@ export default function SimpleDatePicker({
         </PopoverBody>
         <PopoverFooter>
           <Box display="flex" justifyContent="space-between">
-            <Button size="sm" colorScheme={colorSchema} bg={activeColor} onClick={setToday}>
+            <Button size="sm" colorScheme={colorSchema} bg={activeColor} onClick={setToday} _hover={{borderColor: 'transparent'}}>
               {todayLabel}
             </Button>
-            <Button size="sm" variant="ghost" color={activeColor} colorScheme={colorSchema}>
+            <Button size="sm" variant="ghost" color={activeColor} colorScheme={colorSchema} _hover={{borderColor: activeColor}}>
               {clearLabel}
             </Button>
           </Box>
