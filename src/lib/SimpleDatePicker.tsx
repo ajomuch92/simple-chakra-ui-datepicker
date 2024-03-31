@@ -79,10 +79,10 @@ export default function SimpleDatePicker({
   formatDate,
 }: SimpleDatePickerProps) {
   const [currentText, setCurrentText] = useState('')
-  const [currentValue, setCurrentValue] = useState<Date>(defaultValue || new Date())
-  const [isPicked, setIsPicket] = useState(false)
-  const [currentMonth, setCurrentMonth] = useState(currentValue.getMonth())
-  const [currentYear, setCurrentYear] = useState(currentValue.getFullYear())
+  const [currentValue, setCurrentValue] = useState<Date | undefined>(defaultValue)
+  const currentValueTemp = currentValue || new Date()
+  const [currentMonth, setCurrentMonth] = useState(currentValueTemp.getMonth())
+  const [currentYear, setCurrentYear] = useState(currentValueTemp.getFullYear())
   const initialMonthDay = new Date(currentYear, currentMonth)
   const finalMonthDate = new Date(currentYear, currentMonth + 1, 0)
   const initialWeekDay = initialMonthDay.getDay()
@@ -94,7 +94,6 @@ export default function SimpleDatePicker({
 
   const setInternalDate = (date: Date) => {
     setCurrentValue(date)
-    setIsPicket(true)
     if (onChange) {
       onChange(date)
     }
@@ -107,11 +106,12 @@ export default function SimpleDatePicker({
   }
 
   useEffect(() => {
-    if (isPicked) {
+    if (!currentValue) setCurrentText('')
+    else {
       if (formatDate) setCurrentText(formatDate(currentValue))
       else setCurrentText(currentValue.toLocaleDateString())
     }
-  }, [setCurrentText, currentValue, isPicked, formatDate])
+  }, [setCurrentText, currentValue, formatDate])
 
   const Calendar = () => {
     return (
@@ -274,6 +274,9 @@ export default function SimpleDatePicker({
               color={activeColor}
               colorScheme={colorSchema}
               _hover={{ borderColor: activeColor }}
+              onClick={() => {
+                setCurrentValue(undefined)
+              }}
             >
               {clearLabel}
             </Button>
