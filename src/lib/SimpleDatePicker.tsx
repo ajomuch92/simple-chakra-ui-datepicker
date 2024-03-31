@@ -26,10 +26,11 @@ export interface SimpleDatePickerProps {
   leftArrowIcon?: ReactElement
   containerProps?: Omit<BoxProps, 'position' | 'backgroundColor' | 'opacity'>
   withArrow?: boolean
+  isInvalid?: boolean
   popoverProps?: PopoverProps
   closable?: boolean
   placeholder?: string
-  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema'>
+  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema' | 'isInvalid'>
   defaultValue?: Date
   todayLabel?: string
   clearLabel?: string
@@ -55,6 +56,7 @@ export default function SimpleDatePicker({
   leftArrowIcon,
   withArrow = true,
   closable = true,
+  isInvalid,
   containerProps,
   popoverProps,
   inputProps,
@@ -212,6 +214,7 @@ export default function SimpleDatePicker({
             defaultValue={currentText}
             colorScheme={colorSchema}
             cursor="pointer"
+            isInvalid={isInvalid}
             {...inputProps}
           />
           <Box as="span" position="absolute" right="0.5rem" top="50%" transform="translateY(-50%)">
