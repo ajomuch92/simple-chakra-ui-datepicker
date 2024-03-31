@@ -46,7 +46,7 @@ export interface SimpleDatePickerProps {
   monthGap?: string
   dateBorderRadius?: string
   formatDate?: (arg0: Date) => string
-  onChange?: (arg0: Date) => void
+  onChange?: (arg0?: Date) => void
 }
 
 export default function SimpleDatePicker({
@@ -92,7 +92,7 @@ export default function SimpleDatePicker({
     .map((_, index) => index + 1)
   const daysOfMonth: Array<number | undefined> = [...blankDays, ...filledDays]
 
-  const setInternalDate = (date: Date) => {
+  const setInternalDate = (date?: Date) => {
     setCurrentValue(date)
     if (onChange) {
       onChange(date)
@@ -275,7 +275,7 @@ export default function SimpleDatePicker({
               colorScheme={colorSchema}
               _hover={{ borderColor: activeColor }}
               onClick={() => {
-                setCurrentValue(undefined)
+                setInternalDate(undefined)
               }}
             >
               {clearLabel}
