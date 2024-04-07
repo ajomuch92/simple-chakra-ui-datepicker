@@ -26,10 +26,11 @@ export interface SimpleDatePickerProps {
   leftArrowIcon?: ReactElement
   containerProps?: Omit<BoxProps, 'position' | 'backgroundColor' | 'opacity'>
   withArrow?: boolean
+  isInvalid?: boolean
   popoverProps?: PopoverProps
   closable?: boolean
   placeholder?: string
-  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema'>
+  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema' | 'isInvalid'>
   defaultValue?: Date
   todayLabel?: string
   clearLabel?: string
@@ -45,7 +46,7 @@ export interface SimpleDatePickerProps {
   monthGap?: string
   dateBorderRadius?: string
   formatDate?: (arg0: Date) => string
-  onChange?: (arg0: Date) => void
+  onChange?: (arg0?: Date) => void
 }
 
 export default function SimpleDatePicker({
@@ -55,6 +56,7 @@ export default function SimpleDatePicker({
   leftArrowIcon,
   withArrow = true,
   closable = true,
+  isInvalid,
   containerProps,
   popoverProps,
   inputProps,
@@ -77,10 +79,10 @@ export default function SimpleDatePicker({
   formatDate,
 }: SimpleDatePickerProps) {
   const [currentText, setCurrentText] = useState('')
-  const [currentValue, setCurrentValue] = useState<Date>(defaultValue || new Date())
-  const [isPicked, setIsPicket] = useState(false)
-  const [currentMonth, setCurrentMonth] = useState(currentValue.getMonth())
-  const [currentYear, setCurrentYear] = useState(currentValue.getFullYear())
+  const [currentValue, setCurrentValue] = useState<Date | undefined>(defaultValue)
+  const currentValueTemp = currentValue || new Date()
+  const [currentMonth, setCurrentMonth] = useState(currentValueTemp.getMonth())
+  const [currentYear, setCurrentYear] = useState(currentValueTemp.getFullYear())
   const initialMonthDay = new Date(currentYear, currentMonth)
   const finalMonthDate = new Date(currentYear, currentMonth + 1, 0)
   const initialWeekDay = initialMonthDay.getDay()
@@ -90,9 +92,8 @@ export default function SimpleDatePicker({
     .map((_, index) => index + 1)
   const daysOfMonth: Array<number | undefined> = [...blankDays, ...filledDays]
 
-  const setInternalDate = (date: Date) => {
+  const setInternalDate = (date?: Date) => {
     setCurrentValue(date)
-    setIsPicket(true)
     if (onChange) {
       onChange(date)
     }
@@ -105,11 +106,12 @@ export default function SimpleDatePicker({
   }
 
   useEffect(() => {
-    if (isPicked) {
+    if (!currentValue) setCurrentText('')
+    else {
       if (formatDate) setCurrentText(formatDate(currentValue))
       else setCurrentText(currentValue.toLocaleDateString())
     }
-  }, [setCurrentText, currentValue, isPicked, formatDate])
+  }, [setCurrentText, currentValue, formatDate])
 
   const Calendar = () => {
     return (
@@ -212,6 +214,7 @@ export default function SimpleDatePicker({
             defaultValue={currentText}
             colorScheme={colorSchema}
             cursor="pointer"
+            isInvalid={isInvalid}
             {...inputProps}
           />
           <Box as="span" position="absolute" right="0.5rem" top="50%" transform="translateY(-50%)">
@@ -271,6 +274,9 @@ export default function SimpleDatePicker({
               color={activeColor}
               colorScheme={colorSchema}
               _hover={{ borderColor: activeColor }}
+              onClick={() => {
+                setInternalDate(undefined)
+              }}
             >
               {clearLabel}
             </Button>
