@@ -6,7 +6,9 @@ Read the docs [here](https://aarons-organization-7.gitbook.io/simple-chakra-ui-d
 
 <img src="https://res.cloudinary.com/dxcmm3jnj/image/upload/v1711583776/simple-chakra-ui-datepicker/uzjfmhozxcpw3kxb71ot.png" height="200px"/>
 
+# New features
 
+- Adding prop to close on click
 
 # Instalation
 
@@ -22,7 +24,6 @@ npm install --save simple-chakra-ui-datepicker
 import { SimpleDatePicker } from 'simple-chakra-ui-datepicker'
 
 <SimpleDatePicker />
-
 ```
 
 ## Author
