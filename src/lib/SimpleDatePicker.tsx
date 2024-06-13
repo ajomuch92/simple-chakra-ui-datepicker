@@ -14,6 +14,7 @@ import {
   InputProps,
   Button,
   Flex,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { CalendarIcon } from '@chakra-ui/icons'
 import { ternary, isSameDate, isGreaterThanDate, isLessThanDate } from './utils'
@@ -27,10 +28,14 @@ export interface SimpleDatePickerProps {
   containerProps?: Omit<BoxProps, 'position' | 'backgroundColor' | 'opacity'>
   withArrow?: boolean
   isInvalid?: boolean
-  popoverProps?: PopoverProps
+  popoverProps?: Omit<PopoverProps, 'isOpen' | 'onClose'>
   closable?: boolean
+  closeOnClick?: boolean
   placeholder?: string
-  inputProps?: Omit<InputProps, 'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema' | 'isInvalid'>
+  inputProps?: Omit<
+    InputProps,
+    'placeholder' | 'isReadOnly' | 'defaultValue' | 'colorSchema' | 'isInvalid' | 'onClick'
+  >
   defaultValue?: Date
   todayLabel?: string
   clearLabel?: string
@@ -56,6 +61,7 @@ export default function SimpleDatePicker({
   leftArrowIcon,
   withArrow = true,
   closable = true,
+  closeOnClick = true,
   isInvalid,
   containerProps,
   popoverProps,
@@ -78,6 +84,7 @@ export default function SimpleDatePicker({
   onChange,
   formatDate,
 }: SimpleDatePickerProps) {
+  const { isOpen, onToggle, onClose } = useDisclosure()
   const [currentText, setCurrentText] = useState('')
   const [currentValue, setCurrentValue] = useState<Date | undefined>(defaultValue)
   const currentValueTemp = currentValue || new Date()
@@ -168,7 +175,10 @@ export default function SimpleDatePicker({
                 {},
               )}
               onClick={() => {
-                if (!isDisabled) setDate(val)
+                if (!isDisabled) {
+                  setDate(val)
+                  if (closeOnClick) onClose()
+                }
               }}
             >
               {val}
@@ -199,7 +209,7 @@ export default function SimpleDatePicker({
   }
 
   return (
-    <Popover {...popoverProps}>
+    <Popover isOpen={isOpen} onClose={onClose} {...popoverProps}>
       <PopoverTrigger>
         <Box
           position="relative"
@@ -215,6 +225,7 @@ export default function SimpleDatePicker({
             colorScheme={colorSchema}
             cursor="pointer"
             isInvalid={isInvalid}
+            onClick={onToggle}
             {...inputProps}
           />
           <Box as="span" position="absolute" right="0.5rem" top="50%" transform="translateY(-50%)">
